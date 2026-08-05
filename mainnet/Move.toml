@@ -16,7 +16,7 @@ dfmm_admin = "0xabc"
 
 [dependencies.SupraFramework]
 git = "https://github.com/Entropy-Foundation/aptos-core.git"
-rev = "dev"
+rev = "b710f2df13c46ba8ec7c9aec2a5ed78bcfd4b3ce"
 subdir = "aptos-move/framework/supra-framework"
 
 [dependencies.dfmm_framework]
