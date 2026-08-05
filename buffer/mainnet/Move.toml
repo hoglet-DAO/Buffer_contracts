@@ -1,0 +1,26 @@
+[package]
+name = "buffer" #mainnet
+version = "1.0.0"
+authors = []
+
+[addresses]
+
+hoglet_buffer = "0x596e6e8ec0b5f3fe10b7c95bd1cf30973d02a56af11b2bb5ae29e8bfdce9a474"
+dfmm_framework = "0xda20f7d0ec813c751926f06004a10bc6ee1eefc96798f6a1aa31447ee146f932"
+access_control = "0xda20f7d0ec813c751926f06004a10bc6ee1eefc96798f6a1aa31447ee146f932"
+hypernova_core = "0xda20f7d0ec813c751926f06004a10bc6ee1eefc96798f6a1aa31447ee146f932"
+supra_oracle = "0xe3948c9e3a24c51c4006ef2acc44606055117d021158f320062df099c4a94150"
+dfmm_admin = "0xabc"
+
+[dev-addresses]
+
+[dependencies.SupraFramework]
+git = "https://github.com/Entropy-Foundation/aptos-core.git"
+rev = "dev"
+subdir = "aptos-move/framework/supra-framework"
+
+[dependencies.dfmm_framework]
+git = "https://github.com/Entropy-Foundation/IntraLayer.git"
+rev = "master"
+
+[dev-dependencies]
