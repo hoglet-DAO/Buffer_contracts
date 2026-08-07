@@ -14,13 +14,9 @@ dfmm_admin = "0xabc"
 
 [dev-addresses]
 
-[dependencies.SupraFramework]
-git = "https://github.com/Entropy-Foundation/aptos-core.git"
-rev = "b710f2df13c46ba8ec7c9aec2a5ed78bcfd4b3ce"
-subdir = "aptos-move/framework/supra-framework"
-
 [dependencies.dfmm_framework]
-git = "https://github.com/Entropy-Foundation/IntraLayer.git"
-rev = "master"
+git = "https://github.com/hoglet-DAO/POEL_contracts.git"
+rev = "main"
+subdir = "mainnet"
 
 [dev-dependencies]
