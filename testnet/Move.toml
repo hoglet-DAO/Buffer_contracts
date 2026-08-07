@@ -15,7 +15,8 @@ dfmm_admin = "0xabc"
 [dev-addresses]
 
 [dependencies.dfmm_framework]
-git = "https://github.com/hoglet-DAO/IntraLayer.git"
-rev = "master"
+git = "https://github.com/hoglet-DAO/POEL_contracts.git"
+rev = "main"
+subdir = "testnet"
 
 [dev-dependencies]
