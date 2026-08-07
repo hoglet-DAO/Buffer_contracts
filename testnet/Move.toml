@@ -5,7 +5,7 @@ authors = []
 
 [addresses]
 
-hoglet_buffer = "0x596e6e8ec0b5f3fe10b7c95bd1cf30973d02a56af11b2bb5ae29e8bfdce9a474"
+hoglet_buffer = "0xd312813c66e1b49c796b3309b98dc1c2bd57f4639057f4efc50378887ee1424e"
 dfmm_framework = "0xc4a734e5b84deb218ab7ba5a46af45da54d5ff4aa8846e842c3ac2e32ce0eebd"
 access_control = "0x4d32537c4e7773cda63e2594bf2134c379b510c2dd9a68c2dfe53c7abccc61ba"
 hypernova_core = "0x3ab1136a5dbb76b923d2b02f95b042f5d80b70218a0395755eafb63d4eefc340"
