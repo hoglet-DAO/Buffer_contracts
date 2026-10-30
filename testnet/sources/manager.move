@@ -188,9 +188,9 @@ module hoglet_buffer::manager {
         new_fee_bps: u64,
     }
 
-    // Initializes the Buffer creating the Resource Account and setting the admin.
-    fun init_module(admin: &signer) {
-        let (buffer_signer, signer_cap) = account::create_resource_account(admin, BUFFER_SEED);
+    // Initializes the Buffer creating the Resource Account and setting the admin to @HOGL.
+    fun init_module(deployer: &signer) {
+        let (buffer_signer, signer_cap) = account::create_resource_account(deployer, BUFFER_SEED);
         let buffer_addr = signer::address_of(&buffer_signer);
 
         // Pre-register SupraCoin CoinStore to ensure PoEL reward withdrawals succeed
@@ -200,7 +200,7 @@ module hoglet_buffer::manager {
 
         move_to(&buffer_signer, BufferConfig {
             signer_cap,
-            admin: signer::address_of(admin),
+            admin: @HOGL,
             pending_admin: @0x0,
             is_paused: false,
             whitelist: vector::empty<address>(),
@@ -1025,8 +1025,8 @@ module hoglet_buffer::manager {
     // TEST-ONLY HELPERS
     // =================================================================
     #[test_only]
-    public fun init_for_test(admin: &signer) {
-        init_module(admin);
+    public fun init_for_test(deployer: &signer) {
+        init_module(deployer);
     }
 
     #[test_only]

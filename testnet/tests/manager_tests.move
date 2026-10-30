@@ -9,16 +9,17 @@ module hoglet_buffer::manager_tests {
 
     struct UnsupportedFakeCoin {}
 
-    fun setup_env(framework: &signer, admin: &signer): (coin::BurnCapability<SupraCoin>, coin::MintCapability<SupraCoin>) {
+    fun setup_env(framework: &signer, deployer: &signer, admin: &signer): (coin::BurnCapability<SupraCoin>, coin::MintCapability<SupraCoin>) {
         let (burn_cap, mint_cap) = supra_coin::initialize_for_test(framework);
+        account::create_account_for_test(signer::address_of(deployer));
         account::create_account_for_test(signer::address_of(admin));
-        manager::init_for_test(admin);
+        manager::init_for_test(deployer);
         (burn_cap, mint_cap)
     }
 
-    #[test(framework = @0x1, admin = @hoglet_buffer, next_admin = @0x200)]
-    fun test_two_step_admin_transfer_and_pause(framework: &signer, admin: &signer, next_admin: &signer) {
-        let (burn_cap, mint_cap) = setup_env(framework, admin);
+    #[test(framework = @0x1, deployer = @hoglet_buffer, admin = @HOGL, next_admin = @0x200)]
+    fun test_two_step_admin_transfer_and_pause(framework: &signer, deployer: &signer, admin: &signer, next_admin: &signer) {
+        let (burn_cap, mint_cap) = setup_env(framework, deployer, admin);
         let admin_addr = signer::address_of(admin);
         let next_addr = signer::address_of(next_admin);
         account::create_account_for_test(next_addr);
@@ -47,10 +48,10 @@ module hoglet_buffer::manager_tests {
         coin::destroy_mint_cap(mint_cap);
     }
 
-    #[test(framework = @0x1, admin = @hoglet_buffer, attacker = @0xbad)]
+    #[test(framework = @0x1, deployer = @hoglet_buffer, admin = @HOGL, attacker = @0xbad)]
     #[expected_failure(abort_code = 327690, location = hoglet_buffer::manager)]
-    fun test_accept_admin_rejects_non_pending(framework: &signer, admin: &signer, attacker: &signer) {
-        let (burn_cap, mint_cap) = setup_env(framework, admin);
+    fun test_accept_admin_rejects_non_pending(framework: &signer, deployer: &signer, admin: &signer, attacker: &signer) {
+        let (burn_cap, mint_cap) = setup_env(framework, deployer, admin);
         account::create_account_for_test(signer::address_of(attacker));
         manager::nominate_admin(admin, @0x200);
         manager::accept_admin(attacker);
@@ -59,9 +60,9 @@ module hoglet_buffer::manager_tests {
         coin::destroy_mint_cap(mint_cap);
     }
 
-    #[test(framework = @0x1, admin = @hoglet_buffer)]
-    fun test_whitelist_add_and_swap_remove(framework: &signer, admin: &signer) {
-        let (burn_cap, mint_cap) = setup_env(framework, admin);
+    #[test(framework = @0x1, deployer = @hoglet_buffer, admin = @HOGL)]
+    fun test_whitelist_add_and_swap_remove(framework: &signer, deployer: &signer, admin: &signer) {
+        let (burn_cap, mint_cap) = setup_env(framework, deployer, admin);
 
         manager::add_to_whitelist(admin, @0x111);
         manager::add_to_whitelist(admin, @0x222);
@@ -81,9 +82,9 @@ module hoglet_buffer::manager_tests {
         coin::destroy_mint_cap(mint_cap);
     }
 
-    #[test(framework = @0x1, admin = @hoglet_buffer)]
-    fun test_principal_vs_yield_isolation_and_unregistered_destination(framework: &signer, admin: &signer) {
-        let (burn_cap, mint_cap) = setup_env(framework, admin);
+    #[test(framework = @0x1, deployer = @hoglet_buffer, admin = @HOGL)]
+    fun test_principal_vs_yield_isolation_and_unregistered_destination(framework: &signer, deployer: &signer, admin: &signer) {
+        let (burn_cap, mint_cap) = setup_env(framework, deployer, admin);
 
         // Simulate V1 -> V2 in-place upgrade where BufferAccounting did not exist yet
         manager::drop_accounting_for_upgrade_test();
@@ -121,10 +122,10 @@ module hoglet_buffer::manager_tests {
         coin::destroy_mint_cap(mint_cap);
     }
 
-    #[test(framework = @0x1, admin = @hoglet_buffer)]
+    #[test(framework = @0x1, deployer = @hoglet_buffer, admin = @HOGL)]
     #[expected_failure(abort_code = 196622, location = hoglet_buffer::manager)]
-    fun test_withdraw_yield_blocks_draining_reserved_principal(framework: &signer, admin: &signer) {
-        let (burn_cap, mint_cap) = setup_env(framework, admin);
+    fun test_withdraw_yield_blocks_draining_reserved_principal(framework: &signer, deployer: &signer, admin: &signer) {
+        let (burn_cap, mint_cap) = setup_env(framework, deployer, admin);
 
         // 10,000 SUPRA principal + 200 SUPRA yield -> attempting to withdraw 201 must abort with E_INSUFFICIENT_YIELD
         let principal_coins = coin::mint<SupraCoin>(10_000, &mint_cap);
@@ -137,10 +138,10 @@ module hoglet_buffer::manager_tests {
         coin::destroy_mint_cap(mint_cap);
     }
 
-    #[test(framework = @0x1, admin = @hoglet_buffer)]
+    #[test(framework = @0x1, deployer = @hoglet_buffer, admin = @HOGL)]
     #[expected_failure(abort_code = 65542, location = hoglet_buffer::manager)]
-    fun test_compound_yield_rejects_non_supra_coin_type(framework: &signer, admin: &signer) {
-        let (burn_cap, mint_cap) = setup_env(framework, admin);
+    fun test_compound_yield_rejects_non_supra_coin_type(framework: &signer, deployer: &signer, admin: &signer) {
+        let (burn_cap, mint_cap) = setup_env(framework, deployer, admin);
 
         // Calling compound_yield<UnsupportedFakeCoin> must abort with E_COIN_NOT_SUPPORTED
         // before touching poel::withdraw_rewards
@@ -150,9 +151,9 @@ module hoglet_buffer::manager_tests {
         coin::destroy_mint_cap(mint_cap);
     }
 
-    #[test(framework = @0x1, admin = @hoglet_buffer)]
-    fun test_emergency_withdraw_reconciles_accounting_safely(framework: &signer, admin: &signer) {
-        let (burn_cap, mint_cap) = setup_env(framework, admin);
+    #[test(framework = @0x1, deployer = @hoglet_buffer, admin = @HOGL)]
+    fun test_emergency_withdraw_reconciles_accounting_safely(framework: &signer, deployer: &signer, admin: &signer) {
+        let (burn_cap, mint_cap) = setup_env(framework, deployer, admin);
 
         let principal_coins = coin::mint<SupraCoin>(5_000, &mint_cap);
         let yield_coins = coin::mint<SupraCoin>(1_000, &mint_cap);
