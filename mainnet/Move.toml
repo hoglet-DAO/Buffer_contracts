@@ -1,18 +1,18 @@
 [package]
-name = "buffer" #mainnet
+name = "buffer"
 version = "1.0.0"
 authors = []
 
 [addresses]
 
-hoglet_buffer = "0x7e998758d3647818abf817b9719789b29005850236ab1b877002075d4b6ac44b"
-dfmm_framework = "0xda20f7d0ec813c751926f06004a10bc6ee1eefc96798f6a1aa31447ee146f932"
-access_control = "0xda20f7d0ec813c751926f06004a10bc6ee1eefc96798f6a1aa31447ee146f932"
-hypernova_core = "0xda20f7d0ec813c751926f06004a10bc6ee1eefc96798f6a1aa31447ee146f932"
-supra_oracle = "0xe3948c9e3a24c51c4006ef2acc44606055117d021158f320062df099c4a94150"
-dfmm_admin = "0xabc"
+hoglet_buffer = "0xe085a5838d7b7bf7c49b0eb9f32bf9f372bd39ceb8ce4e19d20fc1a81b675e24"
 
 [dev-addresses]
+
+[dependencies.SupraFramework]
+git = "https://github.com/Entropy-Foundation/aptos-core.git"
+rev = "dev"
+subdir = "aptos-move/framework/supra-framework"
 
 [dependencies.dfmm_framework]
 git = "https://github.com/hoglet-DAO/POEL_contracts.git"

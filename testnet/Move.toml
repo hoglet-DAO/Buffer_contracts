@@ -5,7 +5,7 @@ authors = []
 
 [addresses]
 
-hoglet_buffer = "0x7e998758d3647818abf817b9719789b29005850236ab1b877002075d4b6ac44b"
+hoglet_buffer = "0xe085a5838d7b7bf7c49b0eb9f32bf9f372bd39ceb8ce4e19d20fc1a81b675e24"
 dfmm_framework = "0xc4a734e5b84deb218ab7ba5a46af45da54d5ff4aa8846e842c3ac2e32ce0eebd"
 access_control = "0x4d32537c4e7773cda63e2594bf2134c379b510c2dd9a68c2dfe53c7abccc61ba"
 hypernova_core = "0x3ab1136a5dbb76b923d2b02f95b042f5d80b70218a0395755eafb63d4eefc340"
@@ -14,9 +14,13 @@ dfmm_admin = "0xabc"
 
 [dev-addresses]
 
+[dependencies.SupraFramework]
+git = "https://github.com/Entropy-Foundation/aptos-core.git"
+rev = "dev"
+subdir = "aptos-move/framework/supra-framework"
+
 [dependencies.dfmm_framework]
-git = "https://github.com/hoglet-DAO/POEL_contracts.git"
-rev = "main"
-subdir = "testnet"
+git = "https://github.com/Entropy-Foundation/IntraLayer.git"
+rev = "master"
 
 [dev-dependencies]
