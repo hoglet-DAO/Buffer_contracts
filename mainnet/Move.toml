@@ -6,6 +6,7 @@ authors = []
 [addresses]
 
 hoglet_buffer = "0xe085a5838d7b7bf7c49b0eb9f32bf9f372bd39ceb8ce4e19d20fc1a81b675e24"
+HOGL = "0x2ff2ca7683cde2e2d4acb53c3e1c52114b4f8a80a86bac2a065a6d487436ac1d"
 
 [dev-addresses]
 
